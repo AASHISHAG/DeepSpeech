@@ -1,14 +1,14 @@
 #!/bin/bash
 
-export https_proxy=http://192.168.1.1:3128/
-export http_proxy=http://192.168.1.1:3128/
-
 virtualenv -p python3 ../tmp/venv
 source ../tmp/venv/bin/activate
 pip install -r <(grep -v tensorflow requirements.txt)
 pip install tensorflow-gpu==1.12.0rc2
 
 python3 util/taskcluster.py --arch gpu --target ../tmp/native_client
+
+# Install ds_ctcdecoder package from TaskCluster
+pip install $(python3 util/taskcluster.py --decoder)
 
 mkdir -p ../keep/summaries
 

@@ -1,34 +1,19 @@
 #!/bin/bash
 
-export https_proxy=http://192.168.1.1:3128/
-export http_proxy=http://192.168.1.1:3128/
-
 echo "$0: BEGIN"
 
 source ../tmp/venv/bin/activate
 
-# this script splits into train/dev/test and saves to the arg dir
-for lang in 'cv'; 
-do
-    python ./filter_train_dev_test.py "${lang}" "../keep";
-done
-
-for i in ../keep/*.csv;
-do
-    echo `wc -l ${i}`;
-done
-
-
-data="../keep"
+data="/home/josh/CV"
 lang='cv'
 
 python3 -u DeepSpeech.py \
 	--n_hidden 2048 \
-	--checkpoint_dir "../keep" \
-	--epoch 10 \
-	--train_files "${data}/cv_${lang}_valid_train.csv"\
-	--dev_files "${data}/cv_${lang}_valid_dev.csv" \
-	--test_files "${data}/cv_${lang}_valid_test.csv" \
+	--checkpoint_dir "../keep/ckpt" \
+	--epoch -10 \
+	--train_files "${data}/${lang}/cv_${lang}_valid_train.csv"\
+	--dev_files "${data}/${lang}/cv_${lang}_valid_dev.csv" \
+	--test_files "${data}/${lang}/cv_${lang}_valid_test.csv" \
 	--train_batch_size 24 \
 	--dev_batch_size 48 \
 	--test_batch_size 48 \
