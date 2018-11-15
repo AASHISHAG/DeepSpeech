@@ -2,10 +2,15 @@
 
 echo "$0: BEGIN"
 
+lang='cv'
+data="../keep"
+
+
+python ./filter_train_dev_test.py "${lang}" "../keep"
+
+
 source ../tmp/venv/bin/activate
 
-data="/home/josh/CV"
-lang='cv'
 
 python3 -u DeepSpeech.py \
 	--n_hidden 2048 \

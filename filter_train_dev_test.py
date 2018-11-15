@@ -23,8 +23,8 @@ the cv_LOCALE_valid.csv file.
 LOCALE = sys.argv[1]
 output_folder = sys.argv[2]
 
-#ABS_PATH='/snakepit/shared/data/mozilla/CommonVoice/v2.0-alpha1.0'
-ABS_PATH='/home/josh/CV'
+ABS_PATH='/snakepit/shared/data/mozilla/CommonVoice/v2.0-alpha1.0'
+#ABS_PATH='/home/josh/CV'
 
 
 
