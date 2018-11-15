@@ -1,0 +1,33 @@
+
+How to train new language from old CKPT
+-----------------------------------------
+
+SOURCE LANG
+(1) wget old ckpt
+
+TARGET LANG
+(1) train ARPA model with kenlm
+
+# Build pruned ARPA LM.
+lm_path = '/tmp/lm.arpa'
+lmplz --order 3 \
+       --temp_prefix '/tmp/' \
+       --memory 50% \
+       --text 'text.txt' \
+       --arpa ${lm_path} \
+       --prune 0 0 0 1
+
+# Quantize and produce trie binary.
+binary_path = '/tmp/lm.binary'
+build_binary -a 255 \
+              -q 8 \
+              trie # crucial option for DeepSpeech\
+              ${lm_path} \
+              ${binary_path}
+	      
+os.remove(${lm_path})
+
+
+`bin/lmplz -o 5 -S 80% -T /tmp <text >text.arpa`
+
+DeepSpeech/native_client/generate_trie

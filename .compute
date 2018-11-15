@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export https_proxy=http://192.168.1.1:3128/
+export http_proxy=http://192.168.1.1:3128/
+
 echo "$0: BEGIN"
 
 source ../tmp/venv/bin/activate
@@ -20,22 +23,21 @@ data="../keep"
 lang='cv'
 
 python3 -u DeepSpeech.py \
-  --n_hidden 2048 --checkpoint_dir "../keep/ckpt" --epoch -10 \
-  --train_files "${data}/cv_${lang}_valid_train.csv"\
-  --dev_files "${data}/cv_${lang}_valid_dev.csv" \
-  --test_files "${data}/cv_${lang}_valid_test.csv" \
-  --train_batch_size 24 \
-  --dev_batch_size 48 \
-  --test_batch_size 48 \
-  --n_hidden 2048 \
-  --learning_rate 0.0001 \
-  --dropout_rate 0.2 \
-  --epoch 2 \
-  --display_step 0 \
-  --validation_step 1 \
-  --checkpoint_dir "../keep" \
-  --summary_dir "../keep/summaries" \
-  --decoder_library_path "../tmp/native_client/libctc_decoder_with_kenlm.so"
+	--n_hidden 2048 \
+	--checkpoint_dir "../keep" \
+	--epoch 10 \
+	--train_files "${data}/cv_${lang}_valid_train.csv"\
+	--dev_files "${data}/cv_${lang}_valid_dev.csv" \
+	--test_files "${data}/cv_${lang}_valid_test.csv" \
+	--train_batch_size 24 \
+	--dev_batch_size 48 \
+	--test_batch_size 48 \
+	--learning_rate 0.0001 \
+	--dropout_rate 0.2 \
+	--display_step 0 \
+	--validation_step 1 \
+	--summary_dir "../keep/summaries" \
+	--decoder_library_path "../tmp/native_client/libctc_decoder_with_kenlm.so"
 
 
 echo "$0: END"

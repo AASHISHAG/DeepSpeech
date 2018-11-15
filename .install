@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export https_proxy=http://192.168.1.1:3128/
+export http_proxy=http://192.168.1.1:3128/
+
 virtualenv -p python3 ../tmp/venv
 source ../tmp/venv/bin/activate
 pip install -r <(grep -v tensorflow requirements.txt)
@@ -9,6 +12,6 @@ python3 util/taskcluster.py --arch gpu --target ../tmp/native_client
 
 mkdir -p ../keep/summaries
 
-mkdir ../keep/ckpt
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.3.0/deepspeech-0.3.0-checkpoint.tar.gz --directory-prefix="../keep/ckpt/"
-tar xvzf ../keep/ckpt/deepspeech-0.3.0-checkpoint.tar.gz --directory ../keep/ckpt/
+# mkdir ../keep/ckpt
+# wget https://github.com/mozilla/DeepSpeech/releases/download/v0.3.0/deepspeech-0.3.0-checkpoint.tar.gz --directory-prefix="../keep/ckpt/"
+# tar xvzf ../keep/ckpt/deepspeech-0.3.0-checkpoint.tar.gz --directory ../keep/ckpt/
